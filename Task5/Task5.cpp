@@ -141,8 +141,7 @@ void QuickSortNumber(int* array, int left, int right)
 	int r = right;
 	char middle[25];
 	strcpy_s(middle, directory[IndexArray[(left + right) / 2]].number);
-
-	do
+		do
 	{
 		while (strcmp(directory[IndexArray[l]].number, middle) < 0)
 			l++;
