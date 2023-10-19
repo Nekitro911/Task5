@@ -14,21 +14,21 @@ struct information
 {
 	char name[50];
 	char location[50];
-	char number[50];
+	long number;
 };
 
 struct information directory[N] =
 {
-	{ "Natasha", "Ciolkovskogo 25", "89134728567" },
-	{ "Maxsim", "Marta 126", "89134728567" },
-	{ "Alexei", "Geologisheskaia 15", "89134728567" },
-	{ "Victor", "Aviacionnaia 9", "89134728567" },
-	{ "Ksenia", "Lenina 2", "89134728567" },
-	{ "Ekaterina", "Belinskogo 49", "89134728567" },
-	{ "Elena", "Komandirov 2", "89134728567" },
-	{ "Vladimir", "Serafima 22", "89134728567" },
-	{ "Mihail", "Dekabristov 63", "89134728567" },
-	{ "Sasha", "Lyksemburg 50", "8464" },
+	{ "Никита", "Чкалова 25", 91192 },
+	{ "Андрей", "Ленина 126", 87564 },
+	{ "Виктор", "Ленина 15", 98754 },
+	{ "Анастасия", "Восход 9", 91254 },
+	{ "Кирилл", "Победы 2", 25864 },
+	{ "Егор", "Берингова 49", 79835 },
+	{ "Александр", "Тунцова 2", 99854 },
+	{ "Дарья", "Чашушули 22", 65468 },
+	{ "Полина", "Аджарская 69", 94528 },
+	{ "Дмитрий", "Комскомольская 50",15642 },
 };
 
 int IndexArray[N];
@@ -44,19 +44,20 @@ void FindLocation(void);
 void FindNumber(void);
 int main()
 {
+	setlocale(LC_ALL, "Russian");
 	system("mode con cols=80 lines=30");
 	system("color 0");
 	char c;
 	while (1)
 	{
 		cout << "\n";
-		cout << " 1) Sortirovka po Name\n";
-		cout << " 2) Sortirovka po Address\n";
-		cout << " 3) Sortirovka po Telephone\n";
-		cout << " 4) Search po Name\n";
-		cout << " 5) Search po Address\n";
-		cout << " 6) Search po Telephone\n";
-		cout << " Esc - Exit";
+		cout << " 1) Сортировка по Имени\n";
+		cout << " 2) Сортировка по Адресу\n";
+		cout << " 3) Сортировка по Телефону\n";
+		cout << " 4) Поиск по Имени\n";
+		cout << " 5) Поиск по Адресу\n";
+		cout << " 6) Поиск по Телефону\n";
+		cout << " Esc - Выход";
 		c = _getch();
 		switch (c)
 		{
@@ -68,14 +69,14 @@ int main()
 		case '5':system("cls"); NameSort(IndexArray); FindLocation(); system("pause"); system("cls"); break;
 		case '6':system("cls"); NameSort(IndexArray); FindNumber(); system("pause"); system("cls"); break;
 		case 27:return 0;
-		default:cout << "\n Error!"; _getch(); system("cls");
+		default:cout << "\n Ошибка!"; _getch(); system("cls");
 		}
 	}
 }
 void ViewDirectory()
 {
 	cout << "\n";
-	cout << "  Name                 Address                        Telephone            \n";
+	cout << "  Имя                 Адрес                        Телефон            \n";
 	cout << " ==========================================================================\n";
 	for (int i = 0; i < N; i++)
 	{
@@ -139,28 +140,7 @@ void QuickSortNumber(int* array, int left, int right)
 {
 	int l = left;
 	int r = right;
-	char middle[25];
-	strcpy_s(middle, directory[IndexArray[(left + right) / 2]].number);
-		do
-	{
-		while (strcmp(directory[IndexArray[l]].number, middle) < 0)
-			l++;
-		while (strcmp(directory[IndexArray[r]].number, middle) > 0)
-			r--;
-		if (l <= r)
-		{
-			int temp = IndexArray[l];
-			IndexArray[l] = IndexArray[r];
-			IndexArray[r] = temp;
-			l++;
-			r--;
-		}
-	} while (l < r);
-	if (left < r) QuickSortNumber(array, left, r);
-	if (l < right) QuickSortNumber(array, l, right);
-	/*int l = left;
-	int r = right;
-	char x = directory[IndexArray[(left + right) / 2]].number;
+	int x = directory[IndexArray[(left + right) / 2]].number;
 	do
 	{
 		while (directory[IndexArray[l]].number < x)
@@ -177,7 +157,7 @@ void QuickSortNumber(int* array, int left, int right)
 		}
 	} while (l < r);
 	if (left < r) QuickSortNumber(array, left, r);
-	if (l < right) QuickSortNumber(array, l, right);*/
+	if (l < right) QuickSortNumber(array, l, right);
 }
 void NameSort(int* array)
 {
@@ -216,10 +196,10 @@ void FindName()
 	char find[50];
 	bool found = false;
 	cout << "\n";
-	cout << " Vvedite Name dlia search: ";
+	cout << " Введите номер для поиска: ";
 	gets_s(find);
 	cout << "\n";
-	cout << "  Name                 Address                        Telephone            \n";
+	cout << "  Имя                 Адрес                        Телефон            \n";
 	cout << " ==========================================================================\n";
 	for (int i = 0; i < N; i++)
 	{
@@ -234,7 +214,7 @@ void FindName()
 	if (found == false)
 	{
 		cout << "\n";
-		cout << "Zapisi ne naideno!";
+		cout << "Записей не найдено!";
 		cout << "\n";
 	}
 	else
@@ -245,10 +225,10 @@ void FindLocation()
 	char find[50];
 	bool found = false;
 	cout << "\n";
-	cout << " Vvedite Address dlia search: ";
+	cout << " Введите адрес для поиска: ";
 	gets_s(find);
 	cout << "\n";
-	cout << "  Name                 Address                        Telephone            \n";
+	cout << "  Имя                 Адрес                        Телефон            \n";
 	cout << " ==========================================================================\n";
 	for (int i = 0; i < N; i++)
 	{
@@ -263,7 +243,7 @@ void FindLocation()
 	if (found == false)
 	{
 		cout << "\n";
-		cout << "Zapisi ne naideno!";
+		cout << "Записей не найдено!";
 		cout << "\n";
 	}
 	else
@@ -271,17 +251,17 @@ void FindLocation()
 }
 void FindNumber()
 {
-	char find[50];
+	int find;
 	bool found = false;
 	cout << "\n";
-	cout << " Vvedite Telephone dlia search: ";
+	cout << " Введите телефон для поиска: ";
 	cin >> find;
 	cout << "\n";
-	cout << "  Name                 Address                        Telephone            \n";
+	cout << "  Имя                 Адрес                        Телефон            \n";
 	cout << " ==========================================================================\n";
 	for (int i = 0; i < N; i++)
 	{
-		if (strcmp(directory[IndexArray[i]].number, find) == 0)
+		if (directory[IndexArray[i]].number, find)
 		{
 			printf("  %-20s %-30s %-6d  \n", directory[IndexArray[i]].name, directory[IndexArray[i]].location, directory[IndexArray[i]].number);
 			found = true;
@@ -292,7 +272,7 @@ void FindNumber()
 	if (found == false)
 	{
 		cout << "\n";
-		cout << "Zapisi ne naideno!";
+		cout << "Записей не найдено!";
 		cout << "\n";
 	}
 	else
