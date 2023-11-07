@@ -19,16 +19,16 @@ struct information
 
 struct information directory[N] =
 {
-	{ "Никита", "Чкалова 25", 91192 },
-	{ "Андрей", "Ленина 126", 87564 },
-	{ "Виктор", "Ленина 15", 98754 },
-	{ "Анастасия", "Восход 9", 91254 },
-	{ "Кирилл", "Победы 2", 25864 },
-	{ "Егор", "Берингова 49", 79835 },
-	{ "Александр", "Тунцова 2", 99854 },
-	{ "Дарья", "Чашушули 22", 65468 },
-	{ "Полина", "Аджарская 69", 94528 },
-	{ "Дмитрий", "Комскомольская 50",15642 },
+	{ "Никита", "Чкалова 25", 891258 },
+	{ "Андрей", "Ленина 126", 827564 },
+	{ "Виктор", "Ленина 15", 987554 },
+	{ "Анастасия", "Восход 9", 918254 },
+	{ "Кирилл", "Победы 2", 258649 },
+	{ "Егор", "Берингова 49", 798385 },
+	{ "Александр", "Тунцова 2", 998654 },
+	{ "Дарья", "Чашушули 22", 654687 },
+	{ "Полина", "Аджарская 69", 945298 },
+	{ "Дмитрий", "Комскомольская 50",115642 },
 };
 
 int IndexArray[N];
@@ -66,8 +66,8 @@ int main()
 		case '2':system("cls"); LocationSort(IndexArray); ViewDirectory(); system("pause"); system("cls"); break;
 		case '3':system("cls"); NumberSort(IndexArray); ViewDirectory(); system("pause"); system("cls"); break;
 		case '4':system("cls"); NameSort(IndexArray); FindName(); system("pause"); system("cls"); break;
-		case '5':system("cls"); NameSort(IndexArray); FindLocation(); system("pause"); system("cls"); break;
-		case '6':system("cls"); NameSort(IndexArray); FindNumber(); system("pause"); system("cls"); break;
+		case '5':system("cls"); LocationSort(IndexArray); FindLocation(); system("pause"); system("cls"); break;
+		case '6':system("cls"); NumberSort(IndexArray); FindNumber(); system("pause"); system("cls"); break;
 		case 27:return 0;
 		default:cout << "\n Ошибка!"; _getch(); system("cls");
 		}
@@ -75,10 +75,19 @@ int main()
 }
 void ViewDirectory()
 {
-	cout << "\n";
+	cout << "Сортировка по возрастанию:" << endl;
 	cout << "  Имя                 Адрес                        Телефон            \n";
 	cout << " ==========================================================================\n";
 	for (int i = 0; i < N; i++)
+	{
+		printf("  %-20s %-30s %-6d  \n", directory[IndexArray[i]].name, directory[IndexArray[i]].location, directory[IndexArray[i]].number);
+	}
+	cout << " ==========================================================================\n";
+	cout << "\n\n";
+	cout << "Сортировка по убыванию:" << endl;
+	cout << "  Имя                 Адрес                        Телефон            \n";
+	cout << " ==========================================================================\n";
+	for (int i = N-1; i >= 0; i--)
 	{
 		printf("  %-20s %-30s %-6d  \n", directory[IndexArray[i]].name, directory[IndexArray[i]].location, directory[IndexArray[i]].number);
 	}
@@ -112,6 +121,30 @@ void QuickSortName(int* array, int left, int right)
 }
 
 void QuickSortLocation(int* array, int left, int right)
+{
+	int l = left;
+	int r = right;
+	char middle[25];
+	strcpy_s(middle, directory[IndexArray[(l + r) / 2]].location);
+	do
+	{
+		while (strcmp(directory[IndexArray[l]].location, middle) < 0)
+			l++;
+		while (strcmp(directory[IndexArray[r]].location, middle) > 0)
+			r--;
+		if (l <= r)
+		{
+			int temp = IndexArray[l];
+			IndexArray[l] = IndexArray[r];
+			IndexArray[r] = temp;
+			l++;
+			r--;
+		}
+	} while (l < r);
+	if (left < r) QuickSortLocation(array, left, r);
+	if (l < right) QuickSortLocation(array, l, right);
+}
+void QuickSortLocationRevers(int* array, int left, int right)
 {
 	int l = left;
 	int r = right;
@@ -231,6 +264,18 @@ void FindLocation()
 	cout << "  Имя                 Адрес                        Телефон            \n";
 	cout << " ==========================================================================\n";
 	for (int i = 0; i < N; i++)
+	{
+		if (strcmp(directory[IndexArray[i]].location, find) == 0)
+		{
+			printf("  %-20s %-30s %-6d  \n", directory[IndexArray[i]].name, directory[IndexArray[i]].location, directory[IndexArray[i]].number);
+			found = true;
+		}
+		else
+			i = i;
+	}
+	cout << "  Имя                 Адрес                        Телефон            \n";
+	cout << " ==========================================================================\n";
+	for (int i = N; i = 0; i--)
 	{
 		if (strcmp(directory[IndexArray[i]].location, find) == 0)
 		{
